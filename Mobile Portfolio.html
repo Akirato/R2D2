@@ -1,0 +1,367 @@
+<!--
+    jQuery Mobile Portfolio
+    Author: Sam Deering (samdeering.com)
+    Article: jquery4u.com/mobile/jquery-mobile-portfolio/
+    Demo: jquery4u.com/demos/mobileportfoliosite/
+-->
+<!DOCTYPE html>
+<html class="ui-mobile"><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252"><!-- base href="http://www.jquery4u.com/demos/mobileportfoliosite/" -->
+        <title>R2D2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="mobile portfolio, mobile portfolio site">
+        <meta name="author" content="sam deering">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="Mobile%20Portfolio_files/ga.js" async="" type="text/javascript"></script><script src="Mobile%20Portfolio_files/jquery-1.js"></script>
+        <script src="Mobile%20Portfolio_files/jquery.js"></script>
+        <link href="Mobile%20Portfolio_files/jquery.css" rel="stylesheet">
+        <link href="Mobile%20Portfolio_files/jquery_002.css" rel="stylesheet">
+        <link href="Mobile%20Portfolio_files/jquery_003.css" rel="stylesheet">
+        <link href="Mobile%20Portfolio_files/photoswipe.css" rel="stylesheet">
+        <link href="Mobile%20Portfolio_files/style.css" rel="stylesheet">
+        <script src="Mobile%20Portfolio_files/script.js"></script>
+        <script src="Mobile%20Portfolio_files/settings.js"></script>
+        <script src="Mobile%20Portfolio_files/klass.js"></script>
+        <script src="Mobile%20Portfolio_files/code.js"></script>
+         <script type="text/javascript" charset="utf-8" src="phonegap-1.2.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value 
+
+    // Wait for PhoneGap to connect with the device
+    //
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+    // PhoneGap is ready to be used!
+    //
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoDataSuccess(imageData) {
+      // Uncomment to vi:ew the base64 encoded image data
+      // console.log(imageData);
+
+      // Get image handle
+      //
+      var smallImage = document.getElementById('smallImage');
+
+      // Unhide image elements
+      //
+      smallImage.style.display = 'block';
+
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoURISuccess(imageURI) {
+      // Uncomment to view the image file URI 
+      // console.log(imageURI);
+
+      // Get image handle
+      //
+      var largeImage = document.getElementById('largeImage');
+
+      // Unhide image elements
+      //
+      largeImage.style.display = 'block';
+
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      largeImage.src = imageURI;
+    }
+
+    // A button will call this function
+    //
+    function capturePhoto() {
+      // Take picture using device camera and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+    }
+
+    // A button will call this function
+    //
+    function capturePhotoEdit() {
+      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true }); 
+    }
+
+    // A button will call this function
+    //
+    function getPhoto(source) {
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
+
+    // Called if something bad happens.
+    // 
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+
+    </script>
+        
+    </head>
+
+    <body class="ui-mobile-viewport ui-overlay-c">
+
+    
+              <div role="main" class="ui-content" data-role="content">
+              <div role="main" class="ui-content" data-role="content">
+
+                    <div class="pt-menu">
+                        <a class="ui-btn ui-shadow ui-btn-up-d" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-theme="d" data-corners="false" data-role="button" href="#takeapic" ><span class="ui-btn-inner"><span class="ui-btn-text">
+                            <img src="Mobile%20Portfolio_files/profile.png" alt="rss" style="display: block; margin: 0 auto">
+                            Take A Picture
+                        </span></span></a>
+
+                        <a class="ui-btn ui-shadow ui-btn-hover-d" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-theme="d" data-corners="false" data-role="button" href="#notifications"><span class="ui-btn-inner"><span class="ui-btn-text">
+                            <img src="Mobile%20Portfolio_files/portfolio.png" alt="rss" style="display: block; margin: 0 auto">
+                            Notifications
+                        </span></span></a>
+                    </div>
+
+            </div>
+        </div>
+
+        <br><br><br><br>
+        <!-- personal profile page -->
+        <div style="min-height: 671px;" class="ui-page ui-body-c" tabindex="0" data-url="takeapic" data-role="page" id="profile" data-title="profile">
+            <div role="banner" class="ui-header ui-bar-a" data-role="header">
+                <h1 aria-level="1" role="heading" class="ui-title">Take A Pic</h1>
+                <a data-theme="a" data-wrapperels="span" data-iconshadow="true" data-shadow="true" class="ui-btn-left ui-btn ui-shadow ui-btn-icon-left ui-btn-up-a" data-role="button" href="#home" data-icon="home" data-corners="false"><span class="ui-btn-inner"><span class="ui-btn-text">Home</span><span class="ui-icon ui-icon-home ui-icon-shadow">&nbsp;</span></span></a>
+            </div>
+            <div role="main" class="ui-content" data-role="content">
+                <button onclick="capturePhoto();">Capture Photo</button> <br>
+                <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
+                <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+                <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
+                <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+                <img style="display:none;" id="largeImage" src="" />
+                
+                <div class="ui-body">
+                    <!-- previous page link -->
+                     <a class="previous-btn" data-theme="c" data-corners="false" data-role="button" data-inline="true" data-icon="arrow-l" href="#home">
+                        <img src="images/icons/round/64x64/home.png" alt="rss" style="display: block; margin: 0 auto">
+                        Home
+                    </a> 
+
+                    <!-- next page link -->
+                    <a data-wrapperels="span" data-iconshadow="true" data-shadow="true" class="next-btn ui-btn ui-btn-up-c ui-shadow ui-btn-inline ui-btn-icon-right" data-theme="c" data-corners="false" data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="right" href="#portfolio"><span class="ui-btn-inner"><span class="ui-btn-text">
+                        <img src="Mobile%20Portfolio_files/portfolio.png" alt="rss" style="display: block; margin: 0 auto">
+                        Notifications
+                    </span><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></span></a>
+                </div>
+
+            </div>
+            
+        </div>
+
+        <!-- portfolio page -->
+        <div style="min-height: 671px;" class="ui-page ui-body-c" tabindex="0" data-url="notifications" data-role="page" id="portfolio" data-title="portfolio">
+            <div role="banner" class="ui-header ui-bar-a" data-role="header">
+                <h1 aria-level="1" role="heading" class="ui-title">My Portfolio</h1>
+                <a data-theme="a" data-wrapperels="span" data-iconshadow="true" data-shadow="true" class="ui-btn-left ui-btn ui-shadow ui-btn-icon-left ui-btn-up-a" data-role="button" href="#home" data-transition="flip" data-icon="home" data-corners="false"><span class="ui-btn-inner"><span class="ui-btn-text">Home</span><span class="ui-icon ui-icon-home ui-icon-shadow">&nbsp;</span></span></a>
+            </div>
+            <div role="main" class="ui-content" data-role="content">
+
+                <ul data-inset="true" data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow ui-corner-none">
+
+                    <!-- portfolio item 1 -->
+                    <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="false" data-iconpos="right" data-theme="c" class="portfolio-item ui-btn ui-btn-icon-right ui-li ui-li-has-alt ui-li-has-thumb ui-first-child ui-corner-none ui-corner-top ui-btn-up-c"><div class="ui-btn-inner ui-li ui-corner-top"><div class="ui-btn-text"><div class="ui-btn-inner ui-li ui-li-has-alt ui-corner-top">
+                        <div class="ui-btn-text">
+                            <a href="#portfolio1" class="ui-link-inherit ui-corner-none">
+                                <img src="Mobile%20Portfolio_files/1_1.jpg" class="ui-li-thumb ui-corner-none ui-corner-tl">
+                                <h3 class="ui-li-heading">Portfolio Item 1</h3>
+                                <p class="ui-li-desc">A portfolio item example.</p>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="#portfolio1" title="Purchase album" class="ui-li-link-alt ui-btn ui-btn-icon-notext ui-link-inherit ui-corner-tr ui-btn-up-c" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="false" data-iconpos="notext" data-theme="c"><span class="ui-btn-inner ui-corner-tr"><span class="ui-btn-text ui-corner-tr"></span><span data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="arrow-r" data-iconpos="notext" data-theme="b" title="" class="ui-btn ui-btn-up-d ui-shadow ui-btn-corner-all ui-btn-icon-notext"><span class="ui-btn-inner ui-corner-tr"><span class="ui-btn-text ui-corner-tr"></span><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></span></span></span></a></div></div></li>
+
+                    <!-- portfolio item 2 -->
+                    <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="false" data-iconpos="right" data-theme="c" class="portfolio-item ui-btn ui-btn-icon-right ui-li ui-li-has-alt ui-li-has-thumb ui-first-child ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><div class="ui-btn-inner ui-li ui-li-has-alt">
+                        <div class="ui-btn-text">
+                            <a href="#portfolio2" class="ui-link-inherit">
+                                <img src="Mobile%20Portfolio_files/2_1_002.jpg" class="ui-li-thumb">
+                                <h3 class="ui-li-heading">Portfolio Item 2</h3>
+                                <p class="ui-li-desc">Another portfolio item example.</p>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="#portfolio2" title="Purchase album" class="ui-li-link-alt ui-btn ui-btn-icon-notext ui-btn-up-c ui-link-inherit" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="false" data-iconpos="notext" data-theme="c"><span class="ui-btn-inner"><span class="ui-btn-text"></span><span data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="arrow-r" data-iconpos="notext" data-theme="b" title="" class="ui-btn ui-btn-up-d ui-shadow ui-btn-corner-all ui-btn-icon-notext"><span class="ui-btn-inner"><span class="ui-btn-text"></span><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></span></span></span>
+                    </a></div></div></li>
+
+                    <!-- portfolio item 3 -->
+                    <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="false" data-iconpos="right" data-theme="c" class="portfolio-item ui-btn ui-btn-icon-right ui-li ui-li-has-alt ui-li-has-thumb ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><div class="ui-btn-inner ui-li ui-li-has-alt"><div class="ui-btn-text"><a href="#portfolio3" class="ui-link-inherit">
+                    <img src="Mobile%20Portfolio_files/4_1.jpg" class="ui-li-thumb">
+                    <h3 class="ui-li-heading">Portfolio Gallery 1</h3>
+                    <p class="ui-li-desc">A portfolio gallery example.</p></a>
+
+                    </div></div><a href="#portfolio3" title="Purchase album" class="ui-li-link-alt ui-btn ui-btn-icon-notext ui-btn-up-c ui-link-inherit" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="false" data-iconpos="notext" data-theme="c"><span class="ui-btn-inner"><span class="ui-btn-text"></span><span data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="arrow-r" data-iconpos="notext" data-theme="b" title="" class="ui-btn ui-btn-up-d ui-shadow ui-btn-corner-all ui-btn-icon-notext"><span class="ui-btn-inner"><span class="ui-btn-text"></span><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></span></span></span></a></div></div></li>
+
+                    <!-- portfolio item 4 -->
+                    <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="false" data-iconpos="right" data-theme="c" class="portfolio-item ui-btn ui-btn-icon-right ui-li ui-li-has-alt ui-li-has-thumb ui-corner-none ui-corner-bottom ui-li-last ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><div class="ui-btn-inner ui-li ui-li-has-alt"><div class="ui-btn-text"><a href="#portfolio4" class="ui-link-inherit">
+                    <img src="Mobile%20Portfolio_files/3_1.jpg" class="ui-li-thumb ui-corner-none ui-corner-bl">
+                    <h3 class="ui-li-heading">Portfolio Gallery 2</h3>
+                    <p class="ui-li-desc">Another portfolio gallery example.</p></a>
+
+                    </div></div><a href="#portfolio4" title="Purchase album" class="ui-li-link-alt ui-btn ui-btn-icon-notext ui-btn-up-d ui-link-inherit ui-corner-br" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="false" data-iconpos="notext" data-theme="c"><span class="ui-btn-inner"><span class="ui-btn-text"></span><span data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="arrow-r" data-iconpos="notext" data-theme="d" title="" class="ui-btn ui-btn-up-d ui-shadow ui-btn-corner-all ui-btn-icon-notext"><span class="ui-btn-inner"><span class="ui-btn-text"></span><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></span></span></span></a></div></div></li>
+
+                </ul>
+
+                <div>
+                    <!-- previous page link -->
+                    <a data-wrapperels="span" data-iconshadow="true" data-shadow="true" class="previous-btn ui-btn ui-shadow ui-btn-inline ui-btn-icon-left ui-btn-up-c" data-theme="c" data-corners="false" data-role="button" data-inline="true" data-icon="arrow-l" href="#profile"><span class="ui-btn-inner"><span class="ui-btn-text">
+                        <img src="Mobile%20Portfolio_files/profile.png" alt="rss" style="display: block; margin: 0 auto">
+                        Profile
+                    </span><span class="ui-icon ui-icon-arrow-l ui-icon-shadow">&nbsp;</span></span></a>
+
+                    <!-- next page link -->
+                    <a data-wrapperels="span" data-iconshadow="true" data-shadow="true" class="next-btn ui-btn ui-shadow ui-btn-inline ui-btn-icon-right ui-btn-up-c" data-theme="c" data-corners="false" data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="right" href="#contact"><span class="ui-btn-inner"><span class="ui-btn-text">
+                        <img src="Mobile%20Portfolio_files/linkedin.png" alt="rss" style="display: block; margin: 0 auto">
+                        Contact
+                    </span><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></span></a>
+                </div>
+
+            </div>
+            
+        </div>
+
+        <!-- portfolio page 1 -->
+        <div style="min-height: 671px;" class="ui-page ui-body-c" tabindex="0" data-url="portfolio1" data-role="page" id="portfolio1" data-title="portfolio1">
+            <div role="banner" class="ui-header ui-bar-a" data-role="header">
+                <h1 aria-level="1" role="heading" class="ui-title">Portfolio Item 1</h1>
+                <a data-theme="a" data-wrapperels="span" data-iconshadow="true" data-shadow="true" class="ui-btn-left ui-btn ui-shadow ui-btn-icon-left ui-btn-up-a" data-role="button" href="#portfolio" data-transition="flip" data-icon="arrow-l" data-corners="false"><span class="ui-btn-inner"><span class="ui-btn-text">Back</span><span class="ui-icon ui-icon-arrow-l ui-icon-shadow">&nbsp;</span></span></a>
+            </div>
+            <div role="main" class="ui-content" data-role="content">
+
+                <img src="Mobile%20Portfolio_files/1_1_002.jpg" alt="portfolio item 1">
+
+                <p>Career portfolios are used to plan, organize and 
+document education, work samples and skills. People use career 
+portfolios to apply to jobs, apply to college or training programs, get a
+ higher salary, show transferable skills, and to track personal 
+development. They are more in-depth than a resume, which is used to 
+summarize the above in one or two pages. Career portfolios serve as 
+proof of one's skills, abilities, and potential in the future. Career 
+portfolios are becoming common in high schools, college, and workforce 
+development.[citation needed] Many school programs will have students 
+create, update, and use a career portfolio before moving on to the next 
+level in life. <a class="ui-link" href="http://en.wikipedia.org/wiki/Portfolio">Wiki</a></p>
+
+            </div>
+            
+        </div>
+
+        <!-- portfolio page 2 -->
+        <div data-url="portfolio2" data-role="page" id="portfolio2" data-title="portfolio2">
+            <div data-role="header">
+                <h1>Portfolio Item 2</h1>
+                <a data-role="button" href="#portfolio" data-transition="flip" data-icon="arrow-l" data-corners="false">Back</a>
+            </div>
+            <div data-role="content">
+
+                <img src="Mobile%20Portfolio_files/2_1.jpg" alt="portfolio item 2">
+
+                <p>Career portfolios are used to plan, organize and 
+document education, work samples and skills. People use career 
+portfolios to apply to jobs, apply to college or training programs, get a
+ higher salary, show transferable skills, and to track personal 
+development. They are more in-depth than a resume, which is used to 
+summarize the above in one or two pages. Career portfolios serve as 
+proof of one's skills, abilities, and potential in the future. Career 
+portfolios are becoming common in high schools, college, and workforce 
+development.[citation needed] Many school programs will have students 
+create, update, and use a career portfolio before moving on to the next 
+level in life. <a href="http://en.wikipedia.org/wiki/Portfolio">Wiki</a></p>
+
+            </div>
+            <div data-role="footer">
+                <h2>Mobile Portfolio</h2>
+                <p class="copyright">© Copyright 2013</p>
+            </div>
+        </div>
+
+        <!-- portfolio page 3 -->
+        <div data-url="portfolio3" data-role="page" id="portfolio3" data-title="portfolio3">
+            <div data-role="header">
+                <h1>Portfolio Gallery 1</h1>
+                <a data-role="button" href="#portfolio" data-transition="flip" data-icon="arrow-l" data-corners="false">Back</a>
+            </div>
+            <div data-role="content">
+
+                <!-- gallery images -->
+                <ul id="gallery1" class="gallery">
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/4/full/4_1.jpg" rel="external"><img src="Mobile%20Portfolio_files/4_1.jpg" alt="portfolio Image 01"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/4/full/4_2.jpg" rel="external"><img src="Mobile%20Portfolio_files/4_2.jpg" alt="portfolio Image 02"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/4/full/4_3.jpg" rel="external"><img src="Mobile%20Portfolio_files/4_3.jpg" alt="portfolio Image 03"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/4/full/4_4.png" rel="external"><img src="Mobile%20Portfolio_files/4_4.png" alt="portfolio Image 04"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/4/full/4_5.png" rel="external"><img src="Mobile%20Portfolio_files/4_5.png" alt="portfolio Image 05"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/4/full/4_6.png" rel="external"><img src="Mobile%20Portfolio_files/4_6.png" alt="portfolio Image 06"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/4/full/4_7.png" rel="external"><img src="Mobile%20Portfolio_files/4_4.png" alt="portfolio Image 07"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/4/full/4_8.png" rel="external"><img src="Mobile%20Portfolio_files/4_5.png" alt="portfolio Image 08"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/4/full/4_9.png" rel="external"><img src="Mobile%20Portfolio_files/4_6.png" alt="portfolio Image 09"></a></li>
+                </ul>
+
+            </div>
+            <div data-role="footer">
+                <h2>Mobile Portfolio</h2>
+                <p class="copyright">© Copyright 2013</p>
+            </div>
+        </div>
+
+        <!-- portfolio page 4 -->
+        <div data-url="portfolio4" data-role="page" id="portfolio4" data-title="portfolio4">
+            <div data-role="header">
+                <h1>Portfolio Gallery 2</h1>
+                <a data-role="button" href="#portfolio" data-transition="flip" data-icon="arrow-l" data-corners="false">Back</a>
+            </div>
+            <div data-role="content">
+
+                <!-- gallery images -->
+                <ul id="gallery2" class="gallery">
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/3/full/3_1.jpg" rel="external"><img src="Mobile%20Portfolio_files/3_1.jpg" alt="portfolio Image 01"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/3/full/3_2.jpg" rel="external"><img src="Mobile%20Portfolio_files/3_2.jpg" alt="portfolio Image 02"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/3/full/3_3.jpg" rel="external"><img src="Mobile%20Portfolio_files/3_3.jpg" alt="portfolio Image 03"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/3/full/3_4.jpg" rel="external"><img src="Mobile%20Portfolio_files/3_4.jpg" alt="portfolio Image 04"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/3/full/3_1.jpg" rel="external"><img src="Mobile%20Portfolio_files/3_1.jpg" alt="portfolio Image 05"></a></li>
+                    <li><a href="http://www.jquery4u.com/demos/mobileportfoliosite/images/portfolio/3/full/3_2.jpg" rel="external"><img src="Mobile%20Portfolio_files/3_2.jpg" alt="portfolio Image 06"></a></li>
+                </ul>
+
+            </div>
+            <div data-role="footer">
+                <h2>Mobile Portfolio</h2>
+                <p class="copyright">© Copyright 2013</p>
+            </div>
+        </div>
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-44788261-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+    
+
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span><h1>loading</h1></div></body></html>
